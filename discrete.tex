@@ -1,0 +1,120 @@
+\title{Discrete maths uni tasks}
+\author{Krzysztof Pyrkosz}
+\date{\today}
+
+\documentclass[12pt]{article}
+\usepackage{mathtools}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper contains my own solutions to some common, \textit{recurring} exercises.
+\end{abstract}
+
+\tableofcontents
+
+\section{Sums}
+\subsection{Fibo divided by exponential}
+Find value of
+\[\sum_{k=1}^{\infty} \frac{F_k}{3^k}\]
+Where
+\[
+\begin{cases}
+F_0 = 0\\F_1 = 1\\F_n = F_{n-1} + F_{n-2}
+\end{cases}\]
+The sum converges since Cauchy approves: $F_n/3^n < 2^n/3^n = (\frac{2}{3})^n$
+\[
+\begin{split}
+S &= \sum_{k=1}^{\infty} \frac{F_k}{3^k} =
+\frac{1}{3} + \sum_{k=2}^{\infty} \frac{F_k}{3^k} =
+\frac{1}{3} + \frac{1}{3} \sum_{k=2}^{\infty} \frac{F_k}{3^{k-1}} =
+\frac{1}{3} + \frac{1}{3} \sum_{k=1}^{\infty} \frac{F_{k+1}}{3^k} =\\&
+\frac{1}{3} + \frac{1}{3} \sum_{k=1}^{\infty} \frac{F_{k-1} + F_k}{3^k} =
+\frac{1}{3} + \frac{1}{3} \sum_{k=1}^{\infty} \frac{F_{k-1}}{3^k} + \frac{1}{3} \sum_{k=1}^{\infty} \frac{F_k}{3^k} =
+\frac{1}{3} + \frac{1}{9} \sum_{k=1}^{\infty} \frac{F_{k-1}}{3^{k-1}} + \frac{1}{3} S =\\&
+\frac{1}{3} + \frac{1}{9} \sum_{k=0}^{\infty} \frac{F_{k}}{3^k} + \frac{1}{3} S =
+\frac{1}{3} + \frac{1}{9} \sum_{k=1}^{\infty} \frac{F_{k}}{3^k} + \frac{1}{3} S =
+\frac{1}{3} + \frac{1}{9} S + \frac{1}{3} S = \frac{1}{3} + \frac{4}{9} S
+\end{split}
+\]
+So:
+\begin{align*}
+S &= \frac{1}{3} + \frac{4}{9} S\\
+\frac{5}{9} S &= \frac{1}{3}\\
+S &= \frac{3}{5}
+\end{align*}
+
+\subsection{Telescoping fraction}
+\[\sum_{k=1}^{n} \frac{1}{k(k+2)} = \sum_{k=1}^{n} (\frac{A}{k} + \frac{B}{k+2})\]
+We know from algebra that such representation is achievable. Now we got to find constants A and B, since $A(k+2) + Bk = 0k + 1$
+\[
+\begin{cases}
+A + B = 0\\2A=1
+\end{cases}\]
+\[
+\begin{cases}
+A=\frac{1}{2}\\B=-\frac{1}{2}
+\end{cases}\]
+Up and to the right!
+\[
+\sum_{k=1}^{n} \frac{1}{k(k+2)} = \frac{1}{2} \sum_{k=1}^{n} (\frac{1}{k} - \frac{1}{k+2}) =
+\frac{1}{2} (\frac{1}{1} + \frac{1}{2} - \frac{1}{n+1} - \frac{1}{n+2}) =
+\frac{3}{4} - \frac{1}{2} (\frac{1}{n+1} + \frac{1}{n+2})
+\]
+
+\section{Inclusion-exclusion principle}
+\subsection{Odd numbers indivisible by 3,5,7}
+How many odd numbers not greater than n are indivisible by 3, 5 and 7?\\
+Solution: from all odd numbers erase odd divisible by 3, 5, 7, separately. Add odd divisible by 15 (3 and 5), by 21 (3 and 7), by 35 (5 and 7) because we've removed them twice. Remove odd divisible by 105 (3*5*7) for similar reason.\\
+Odd - $\left \lfloor{\frac{n+1}{2}}\right \rfloor$\\
+Odd divisible by 3 - $\left \lfloor{\frac{n+3}{6}}\right \rfloor$\\
+Odd divisible by 5 - $\left \lfloor{\frac{n+5}{10}}\right \rfloor$\\
+Odd divisible by 7 - $\left \lfloor{\frac{n+7}{14}}\right \rfloor$\\
+Odd divisible by 15 - $\left \lfloor{\frac{n+15}{30}}\right \rfloor$\\
+Odd divisible by 21 - $\left \lfloor{\frac{n+21}{42}}\right \rfloor$\\
+Odd divisible by 35 - $\left \lfloor{\frac{n+35}{70}}\right \rfloor$\\
+Odd divisible by 105 - $\left \lfloor{\frac{n+105}{210}}\right \rfloor$\\
+
+\section{Combinatorics}
+\subsection{$x_1 + x_2 + ... + x_k = n$}
+I've first bumped onto this problem with (more or less) such task description: Santa has got \textit{n} candies which he plans to distribute among \textit{k} kids. Gifts are not distinguishable, kids are. Besides, it is possible not to  get a single sweet.\\
+For example, there are 6 ways of distributing 2 gifts among 3 kids.
+
+\begin{center}
+\begin{tabular}{ c c c c }
+\# & John & Tom & Alice \\ 
+1 & 0 & 0 & 2 \\
+2 & 0 & 2 & 0 \\
+3 & 2 & 0 & 0 \\
+4 & 0 & 1 & 1 \\
+5 & 1 & 0 & 1 \\
+6 & 1 & 1 & 0 
+\end{tabular}
+\end{center}
+
+To solve the task, let's assume we play a game consiting of $n+k-1$ rounds, starting at kid number 1. In each step we can either give a gift to current kid, or move to next kid. Clearly, there are $n$ rounds in which we give out a candy, and $k-1$ moves to next recipient.\\
+In table below, I've added rounds to achieve particular final state (distribution of candies). M means move to next, G - give.
+
+\begin{center}
+\begin{tabular}{ c c c c c }
+\# & game steps & John & Tom & Alice\\ 
+1 & MMGG & 0 & 0 & 2 \\
+2 & MGGM & 0 & 2 & 0 \\
+3 & GGMM & 2 & 0 & 0 \\
+4 & MGMG & 0 & 1 & 1 \\
+5 & GMMG & 1 & 0 & 1 \\
+6 & GMGM & 1 & 1 & 0 
+\end{tabular}
+\end{center}
+
+I'm pretty sure you already are able to see general solution for \textit{n} and \textit{k}.\\
+In a game consisting of $n+k-1$ rounds choose $k-1$ for the ''move'' command - ${n+k-1}\choose{k-1}$.
+
+\section{Modulos 'n remainders}
+\subsection{Power with specified suffix}
+Does such \textit{k} exist, that $7^k \pmod{1000} = 321$?\\
+Answer: no. Tip: write down powers of 7 modulo 100. You get a cycle of $\{01, 07, 49, 43\}$.\\\\
+Does such \textit{k} exist, that $7^k$ ends with a suffix of given \textit{p} zeros and one? For example, for $p=5$, we expect suffix $000001$. $k=0$ is not a valid answer.\\
+Answer: yes. Tip: what can you say about $7^4, 7^{40}, 7^{400}, 7^{4000}$ and so on?
+\end{document}
